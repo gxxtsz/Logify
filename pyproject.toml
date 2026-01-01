@@ -1,0 +1,115 @@
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "logify"
+version = "0.1.0"
+description = "一个功能完善、易于扩展的 Python 日志处理模块"
+readme = "README.md"
+license = {text = "MIT"}
+authors = [
+    {name = "gxxtsz", email = "2460726476@qq.com"}
+]
+maintainers = [
+    {name = "gxxtsz", email = "2460726476@qq.com"}
+]
+keywords = [
+    "logging",
+    "logger",
+    "log",
+    "python-logging",
+    "structured-logging",
+    "json-logging",
+    "async-logging",
+    "rotating-logs"
+]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: System :: Logging",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+    "Typing :: Typed"
+]
+requires-python = ">=3.8"
+dependencies = []
+
+[project.optional-dependencies]
+yaml = ["pyyaml>=6.0"]
+toml = ["tomli>=2.0; python_version < '3.11'"]
+all = [
+    "pyyaml>=6.0",
+    "tomli>=2.0; python_version < '3.11'"
+]
+dev = [
+    "pytest>=7.0",
+    "pytest-cov>=4.0",
+    "pytest-asyncio>=0.21",
+    "black>=23.0",
+    "isort>=5.12",
+    "mypy>=1.0",
+    "ruff>=0.1"
+]
+
+[project.urls]
+Homepage = "https://github.com/gxxtsz/logify"
+Documentation = "https://github.com/gxxtsz/logify#readme"
+Repository = "https://github.com/gxxtsz/logify.git"
+Issues = "https://github.com/gxxtsz/logify/issues"
+Changelog = "https://github.com/gxxtsz/logify/blob/main/CHANGELOG.md"
+
+[tool.setuptools]
+packages = ["logify", "logify.api", "logify.core", "logify.handlers", "logify.formatters", "logify.filters", "logify.config"]
+
+[tool.setuptools.package-data]
+logify = ["py.typed"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = ["test_*.py"]
+python_classes = ["Test*"]
+python_functions = ["test_*"]
+addopts = "-v --tb=short"
+
+[tool.coverage.run]
+source = ["logify"]
+omit = ["tests/*"]
+
+[tool.coverage.report]
+exclude_lines = [
+    "pragma: no cover",
+    "def __repr__",
+    "raise NotImplementedError",
+    "if TYPE_CHECKING:",
+    "if __name__ == .__main__.:"
+]
+
+[tool.black]
+line-length = 100
+target-version = ["py38", "py39", "py310", "py311", "py312"]
+include = '\.pyi?$'
+
+[tool.isort]
+profile = "black"
+line_length = 100
+known_first_party = ["logify"]
+
+[tool.mypy]
+python_version = "3.8"
+warn_return_any = true
+warn_unused_configs = true
+ignore_missing_imports = true
+
+[tool.ruff]
+line-length = 100
+target-version = "py38"
+select = ["E", "F", "W", "I", "UP", "B", "C4"]
+ignore = ["E501"]
