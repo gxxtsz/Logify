@@ -55,6 +55,7 @@ class LoggerManager:
         """
         # 延迟导入避免循环依赖
         from ..api.logger import Logger
+        from ..handlers.console import ConsoleHandler
         
         if name in self._loggers:
             return self._loggers[name]
@@ -74,9 +75,11 @@ class LoggerManager:
             
             self._loggers[name] = logger
             
-            # 保存 root logger 引用
+            # 保存 root logger 引用，并添加默认控制台处理器
             if name == "root":
                 self._root_logger = logger
+                # 为 root logger 添加默认的控制台处理器
+                logger.add_handler(ConsoleHandler())
             
             return logger
     

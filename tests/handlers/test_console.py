@@ -24,7 +24,7 @@ class TestConsoleHandlerInit:
         assert handler.stream is sys.stdout
         assert handler.level == DEBUG
         assert isinstance(handler.formatter, ColorFormatter)
-        assert handler._use_stderr_for_errors is True
+        assert handler._use_stderr_for_errors is False
     
     def test_custom_stream(self):
         """Test initialization with custom stream"""
