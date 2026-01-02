@@ -28,7 +28,7 @@ class ConsoleHandler(BaseHandler):
         stream: Optional[TextIO] = None,
         level: Union[LogLevel, int] = LogLevel.DEBUG,
         formatter: Optional[BaseFormatter] = None,
-        use_stderr_for_errors: bool = True,
+        use_stderr_for_errors: bool = False,
         name: str = ""
     ):
         """初始化控制台处理器
@@ -37,7 +37,7 @@ class ConsoleHandler(BaseHandler):
             stream: 输出流，默认为 sys.stdout
             level: 最低日志级别
             formatter: 格式化器，默认为 ColorFormatter
-            use_stderr_for_errors: 是否将 ERROR 及以上级别输出到 stderr
+            use_stderr_for_errors: 是否将 ERROR 及以上级别输出到 stderr，默认 False 以保证输出顺序
             name: 处理器名称
         """
         # 默认使用颜色格式化器

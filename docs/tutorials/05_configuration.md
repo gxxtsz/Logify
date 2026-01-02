@@ -5,7 +5,6 @@
 ## 目录
 
 - [配置概述](#配置概述)
-- [使用 basic_config 快速配置](#使用-basic_config-快速配置)
 - [从字典配置](#从字典配置)
 - [从文件配置](#从文件配置)
 - [ConfigLoader 配置加载器](#configloader-配置加载器)
@@ -23,78 +22,9 @@ Logify 提供了多种配置方式：
 
 | 方式 | 适用场景 |
 |------|----------|
-| `basic_config()` | 快速配置，适合简单场景 |
 | 字典配置 | 程序化配置 |
 | 文件配置 | 生产环境，支持 JSON/YAML/TOML |
 | 环境变量 | 容器化部署 |
-
----
-
-## 使用 basic_config 快速配置
-
-最简单的配置方式，类似于 Python 标准库的 `logging.basicConfig()`。
-
-### 基本使用
-
-```python
-import logify
-from logify import INFO
-
-# 快速配置根 Logger
-logify.basic_config(level=INFO)
-
-# 开始记录日志
-logify.info("应用启动")
-```
-
-### 完整参数
-
-```python
-import logify
-from logify import DEBUG
-
-logify.basic_config(
-    level=DEBUG,                              # 日志级别
-    format="%(asctime)s - %(levelname)s - %(message)s",  # 格式模板
-    datefmt="%Y-%m-%d %H:%M:%S",             # 日期格式
-    filename="app.log",                       # 日志文件（可选）
-    handlers=None,                            # 处理器列表（可选）
-    force=False                               # 是否强制重新配置
-)
-```
-
-### 配置示例
-
-```python
-import logify
-from logify import INFO, ConsoleHandler, FileHandler, ColorFormatter
-
-# 示例 1：仅控制台输出
-logify.basic_config(level=INFO)
-
-# 示例 2：输出到文件
-logify.basic_config(
-    level=INFO,
-    filename="app.log"
-)
-
-# 示例 3：自定义格式
-logify.basic_config(
-    level=INFO,
-    format="[%(asctime)s] %(levelname)-8s | %(message)s",
-    datefmt="%H:%M:%S"
-)
-
-# 示例 4：使用自定义处理器
-console = ConsoleHandler()
-console.formatter = ColorFormatter()
-file_handler = FileHandler("app.log")
-
-logify.basic_config(
-    level=INFO,
-    handlers=[console, file_handler]
-)
-```
 
 ---
 
@@ -761,8 +691,7 @@ if __name__ == "__main__":
 
 在本教程中，你学会了：
 
-1. ✅ 使用 `basic_config()` 快速配置
-2. ✅ 从字典配置日志系统
+1. ✅ 从字典配置日志系统
 3. ✅ 从 JSON/YAML/TOML 文件加载配置
 4. ✅ 使用 `ConfigLoader` 加载和合并配置
 5. ✅ 使用 `ConfigParser` 解析配置

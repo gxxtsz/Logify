@@ -204,23 +204,6 @@ logify.critical("严重错误")
 # 这些函数使用名为 "root" 的 logger
 ```
 
-### 使用 basic_config 快速配置
-
-```python
-import logify
-from logify import INFO
-
-# 快速配置根 logger
-logify.basic_config(
-    level=INFO,
-    format="[%(asctime)s] %(levelname)s - %(message)s",
-    datefmt="%H:%M:%S"
-)
-
-# 开始记录日志
-logify.info("应用程序启动")
-```
-
 ---
 
 ## 小结
@@ -246,13 +229,11 @@ logify.info("应用程序启动")
 """
 Logify 快速入门示例
 """
-from logify import get_logger, LogLevel, basic_config, INFO
-
-# 配置根 logger
-basic_config(level=INFO)
+from logify import get_logger, LogLevel, INFO
 
 # 获取应用 logger
 logger = get_logger("myapp")
+logger.level = INFO
 
 def main():
     logger.info("应用程序启动")

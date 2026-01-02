@@ -29,45 +29,6 @@ cd logify
 pip install -e .
 ```
 
-## 快速开始
-
-### 基本用法
-
-```python
-from logify import get_logger
-
-# 获取 logger
-logger = get_logger("myapp")
-
-# 记录不同级别的日志
-logger.debug("调试信息")
-logger.info("一般信息")
-logger.warning("警告信息")
-logger.error("错误信息")
-logger.critical("严重错误")
-```
-
-### 使用便捷函数
-
-```python
-from logify import info, error, debug
-
-info("应用启动")
-debug("调试信息")
-error("发生错误")
-```
-
-### 快速配置
-
-```python
-from logify import basic_config, INFO
-
-basic_config(
-    level=INFO,
-    format="%(asctime)s - %(name)s - %(levelname)s - %(message)s",
-    filename="app.log"  # 可选，不指定则输出到控制台
-)
-```
 
 ## 使用示例
 
@@ -379,12 +340,3 @@ pytest tests/ --cov=logify --cov-report=html
 
 本项目采用 MIT 许可证 - 查看 [LICENSE](LICENSE) 文件了解详情。
 
-## 更新日志
-
-### v0.1.0
-
-- 初始版本发布
-- 支持多种日志处理器
-- 支持多种格式化器
-- 支持日志过滤器
-- 支持配置文件加载

@@ -106,20 +106,33 @@ class ColorFormatter(TextFormatter):
         if self._force_colors:
             return True
         
+        import os
+        
+        # 检测 PyCharm / IntelliJ IDEA 环境
+        if os.environ.get('PYCHARM_HOSTED') == '1' or 'IDEA' in os.environ.get('TERMINAL_EMULATOR', ''):
+            return True
+        
+        # 检测 VS Code 环境
+        if os.environ.get('TERM_PROGRAM') == 'vscode':
+            return True
+        
         # 检查是否是 TTY
-        if not hasattr(sys.stdout, 'isatty') or not sys.stdout.isatty():
-            return False
+        if hasattr(sys.stdout, 'isatty') and sys.stdout.isatty():
+            return True
         
         # Windows 特殊处理
         if sys.platform == 'win32':
             try:
-                import os
-                return os.environ.get('TERM') or os.environ.get('ANSICON') or 'WINDOWS_TERMINAL' in os.environ.get('WT_SESSION', '')
+                return bool(
+                    os.environ.get('TERM') or 
+                    os.environ.get('ANSICON') or 
+                    os.environ.get('WT_SESSION') or  # Windows Terminal
+                    os.environ.get('COLORTERM')
+                )
             except Exception:
-                # Windows 10+ 默认支持 ANSI
-                return True
+                pass
         
-        return True
+        return False
     
     def _get_level_color(self, level: int) -> str:
         """获取日志级别对应的颜色

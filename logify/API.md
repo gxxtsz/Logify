@@ -1273,26 +1273,10 @@ Logify 提供了模块级的便捷函数，直接操作根 Logger：
 
 ```python
 from logify import (
-    basic_config,
     configure_from_file,
     configure_from_dict,
     get_logger,
     debug, info, warning, error, critical, exception
-)
-```
-
-### basic_config
-
-快速配置根日志记录器。
-
-```python
-basic_config(
-    level: int = INFO,
-    format: str = "%(asctime)s - %(name)s - %(levelname)s - %(message)s",
-    datefmt: str = "%Y-%m-%d %H:%M:%S",
-    filename: str = None,
-    handlers: list = None,
-    force: bool = False
 )
 ```
 
@@ -1327,13 +1311,13 @@ exception(msg, *args, **kwargs)
 
 ## 完整示例
 
-### 基础示例
+### 使用配置文件
 
 ```python
-from logify import get_logger, basic_config, WARNING
+from logify import get_logger, configure_from_file, WARNING
 
-# 快速配置
-basic_config(level=WARNING, filename="app.log")
+# 从配置文件加载
+configure_from_file("logging.yaml")
 
 # 记录日志
 logger = get_logger("myapp")
@@ -1524,7 +1508,6 @@ from logify import (
     Logger,
     
     # Functions
-    basic_config,
     configure_from_file,
     configure_from_dict,
     debug, info, warning, error, critical, exception,
