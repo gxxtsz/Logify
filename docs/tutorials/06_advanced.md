@@ -810,7 +810,24 @@ from logify import (
     LevelFilter, RegexFilter, ContextFilter,
     
     # 配置
-    configure_from_file, configure_from_dict
+    basic_config, configure_from_file, configure_from_dict
+)
+```
+
+### 快速配置模板
+
+```python
+import logify
+from logify import INFO
+
+# 开发环境
+logify.basic_config(level=DEBUG)
+
+# 生产环境
+logify.basic_config(
+    level=INFO,
+    filename="/var/log/myapp/app.log",
+    format="%(asctime)s [%(process)d] %(levelname)s - %(message)s"
 )
 ```
 

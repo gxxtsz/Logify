@@ -87,6 +87,60 @@ from .config.parser import ConfigParser
 from .api.logger import Logger
 
 
+def basic_config(
+    level: int = INFO,
+    format: str = "%(asctime)s - %(name)s - %(levelname)s - %(message)s",
+    datefmt: str = "%Y-%m-%d %H:%M:%S",
+    filename: str = None,
+    handlers: list = None,
+    force: bool = False
+) -> None:
+    """快速配置根日志记录器
+    
+    类似于 logging.basicConfig() 的便捷函数
+    
+    Args:
+        level: 日志级别
+        format: 日志格式
+        datefmt: 日期格式
+        filename: 日志文件名（可选）
+        handlers: 处理器列表（可选）
+        force: 是否强制重新配置
+    """
+    root = get_logger("root")
+    
+    # 如果已有处理器且不强制，跳过
+    if root.handlers and not force:
+        return
+    
+    # 清除现有处理器
+    if force:
+        for handler in root.handlers[:]:
+            root.remove_handler(handler)
+    
+    # 设置级别
+    root.level = level
+    
+    # 创建格式化器
+    formatter = TextFormatter(fmt=format, datefmt=datefmt)
+    
+    if handlers:
+        # 使用提供的处理器
+        for handler in handlers:
+            handler.formatter = formatter
+            root.add_handler(handler)
+    elif filename:
+        # 使用文件处理器
+        file_handler = FileHandler(filename)
+        file_handler.formatter = formatter
+        root.add_handler(file_handler)
+    else:
+        # 默认使用控制台处理器
+        console_handler = ConsoleHandler()
+        console_handler.formatter = ColorFormatter(fmt=format, datefmt=datefmt)
+        root.add_handler(console_handler)
+
+
 def configure_from_file(filepath: str) -> ConfigParser:
     """从配置文件配置日志系统
     
@@ -194,6 +248,7 @@ __all__ = [
     'Logger',
     
     # Functions
+    'basic_config',
     'configure_from_file',
     'configure_from_dict',
     'debug',
